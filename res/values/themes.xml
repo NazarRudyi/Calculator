@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style parent="android:Theme.Light" name="AppBaseTheme">      
+        
+    </style>
+    
+    
+    <style name="AppTheme"  parent="AppBaseTheme">
+        
+    </style>
+    
+    
+    
+    <style name="CalculationTheme" parent="AppBaseTheme">
+        <item name="android:buttonStyle">@style/rounded_button</item>
+        <item name="android:editTextStyle">@style/classic_Edittext.rounded</item>
+       
+    </style>
+    
+</resources>
