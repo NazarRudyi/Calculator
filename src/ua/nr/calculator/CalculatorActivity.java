@@ -29,16 +29,22 @@ public class CalculatorActivity extends Activity {
 	               btnMultiply, 
 	               btnSubtract;	
 	
-	private Add add = new Add();
-	private Divide div = new Divide();
-	private Multiply mul = new Multiply();
-	private Subtract sub = new Subtract();
+	private static Strategy add = new Add();
+	private static Strategy div = new Divide();
+	private static Strategy mul = new Multiply();
+	private static Strategy sub = new Subtract();
 	
 	private OperationType operType;
 	
 		
 	private EnumMap<Symbol, Object> commands = new EnumMap<>(Symbol.class);
-	private static Map<OperationType, Double> forCalc = new HashMap<>();
+	private static Map<OperationType, Strategy> forCalc = new HashMap<>();
+	static{
+	forCalc.put(OperationType.ADD, add);			
+	forCalc.put(OperationType.DIVIDE, div);	
+	forCalc.put(OperationType.MULTIPLY, mul);			
+	forCalc.put(OperationType.SUBTRACT, sub);
+	}
 
 	
 	private static int currentTheme = R.style.CalculationTheme;
@@ -243,13 +249,8 @@ public class CalculatorActivity extends Activity {
 	
 	private Double calc(OperationType operType, double x,
 			double y) {
-		
-			forCalc.put(OperationType.ADD, add.execute(x, y));			
-			forCalc.put(OperationType.DIVIDE, div.execute(x, y));	
-			forCalc.put(OperationType.MULTIPLY, mul.execute(x, y));			
-			forCalc.put(OperationType.SUBTRACT, sub.execute(x, y));
-		
-		return forCalc.get(operType);
+				
+		return forCalc.get(operType).execute(x, y);
 	}
 
 
