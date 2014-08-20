@@ -36,12 +36,9 @@ public class CalculatorActivity extends Activity {
 	
 	private OperationType operType;
 	
-	private Context context = new Context();
-	
-	
-	
+		
 	private EnumMap<Symbol, Object> commands = new EnumMap<>(Symbol.class);
-	private Map<OperationType, Double> forCalc = new HashMap<>();
+	private static Map<OperationType, Double> forCalc = new HashMap<>();
 
 	
 	private static int currentTheme = R.style.CalculationTheme;
@@ -247,20 +244,11 @@ public class CalculatorActivity extends Activity {
 	private Double calc(OperationType operType, double x,
 			double y) {
 		
-		switch(operType){
-		case ADD:
-			context.setStrategy(add);
-			forCalc.put(OperationType.ADD, Context.execute(x, x));
-		case DIVIDE:
-			context.setStrategy(div);
-			forCalc.put(OperationType.DIVIDE, Context.execute(x, x));
-		case MULTIPLY:
-			context.setStrategy(mul);
-			forCalc.put(OperationType.MULTIPLY, Context.execute(x, x));
-		case SUBTRACT:
-			context.setStrategy(sub);			
-			forCalc.put(OperationType.SUBTRACT, Context.execute(x, x));
-		}
+			forCalc.put(OperationType.ADD, add.execute(x, y));			
+			forCalc.put(OperationType.DIVIDE, div.execute(x, y));	
+			forCalc.put(OperationType.MULTIPLY, mul.execute(x, y));			
+			forCalc.put(OperationType.SUBTRACT, sub.execute(x, y));
+		
 		return forCalc.get(operType);
 	}
 
