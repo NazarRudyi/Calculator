@@ -1,6 +1,8 @@
 package ua.nr.calculator;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,13 +24,24 @@ public class CalculatorActivity extends Activity {
 	
 	private EditText txtResult;
 	
-	private Button btnAdd, btnDivide, btnMultiply, btnSubtract;	
+	private Button btnAdd, 
+	               btnDivide, 
+	               btnMultiply, 
+	               btnSubtract;	
+	
+	private Add add = new Add();
+	private Divide div = new Divide();
+	private Multiply mul = new Multiply();
+	private Subtract sub = new Subtract();
 	
 	private OperationType operType;
+	
+	private Context context = new Context();
 	
 	
 	
 	private EnumMap<Symbol, Object> commands = new EnumMap<>(Symbol.class);
+	private Map<OperationType, Double> forCalc = new HashMap<>();
 
 	
 	private static int currentTheme = R.style.CalculationTheme;
@@ -236,15 +249,19 @@ public class CalculatorActivity extends Activity {
 		
 		switch(operType){
 		case ADD:
-			return CountClass.add(x, y);
+			context.setStrategy(add);
+			forCalc.put(OperationType.ADD, Context.execute(x, x));
 		case DIVIDE:
-			return CountClass.divide(x, y);
+			context.setStrategy(div);
+			forCalc.put(OperationType.DIVIDE, Context.execute(x, x));
 		case MULTIPLY:
-			return CountClass.multiply(x, y);
+			context.setStrategy(mul);
+			forCalc.put(OperationType.MULTIPLY, Context.execute(x, x));
 		case SUBTRACT:
-			return CountClass.subtract(x, y);
+			context.setStrategy(sub);			
+			forCalc.put(OperationType.SUBTRACT, Context.execute(x, x));
 		}
-		return null;
+		return forCalc.get(operType);
 	}
 
 
